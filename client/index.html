@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MedCore — Hospital Management</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Auth screen -->
+<div id="authScreen" class="auth-screen">
+  <div class="auth-card">
+    <div class="brand" style="justify-content:center; margin-bottom:6px;">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M12 7v10M7 12h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brand-name">MedCore</span>
+    </div>
+    <h1 id="authTitle">Log in</h1>
+    <p class="muted" id="authSub">Hospital management portal — patients, doctors, staff and admin.</p>
+
+    <form id="authForm">
+      <label class="full" id="authNameField" style="display:none;">Full name
+        <input type="text" id="authName" placeholder="Your name">
+      </label>
+      <label class="full">Email
+        <input type="email" id="authEmail" required placeholder="you@example.com">
+      </label>
+      <label class="full">Password
+        <input type="password" id="authPassword" required placeholder="At least 8 characters" minlength="8">
+      </label>
+
+      <div id="patientExtraFields" style="display:none;">
+        <div class="field-row">
+          <label>Phone <input type="text" id="authPhone" placeholder="Optional"></label>
+          <label>Date of birth <input type="date" id="authDob"></label>
+        </div>
+        <div class="field-row">
+          <label>Gender
+            <select id="authGender">
+              <option value="">Prefer not to say</option>
+              <option>Female</option><option>Male</option><option>Other</option>
+            </select>
+          </label>
+          <label>Blood group <input type="text" id="authBlood" placeholder="e.g. O+"></label>
+        </div>
+        <label class="full">Address <input type="text" id="authAddress" placeholder="Optional"></label>
+      </div>
+
+      <div id="authError" class="auth-error"></div>
+      <button type="submit" class="btn primary" style="width:100%; margin-top:6px;" id="authSubmit">Log in</button>
+    </form>
+    <p class="muted" style="text-align:center; margin-top:14px;">
+      <span id="authToggleText">New patient?</span>
+      <button type="button" class="link-btn" id="authToggle">Create a patient account</button>
+    </p>
+    <p class="muted small-note">Doctor, receptionist and admin accounts are created by hospital administration — they're not self-signup.</p>
+
+    <details class="api-config">
+      <summary>API server address</summary>
+      <label class="full">Backend URL
+        <input type="text" id="apiBaseInput" placeholder="http://localhost:4001/api">
+      </label>
+      <button type="button" class="btn ghost" id="apiBaseSave" style="margin-top:8px;">Save</button>
+    </details>
+  </div>
+</div>
+
+<div id="app" style="display:none;">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <rect x="1" y="1" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M11 6v10M6 11h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brand-name">MedCore</span>
+    </div>
+    <nav class="tabs" id="tabs"></nav>
+    <div class="user-chip" id="userChip"></div>
+    <button class="icon-btn logout" id="logoutBtn">Log out</button>
+  </header>
+
+  <div id="banners"></div>
+  <main id="main"></main>
+</div>
+
+<!-- Generic modal (reused for several forms) -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <h2 id="modalTitle">Title</h2>
+      <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="api.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
